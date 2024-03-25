@@ -1,5 +1,7 @@
 import 'package:ecommers_app/screens/routes.dart';
 import 'package:ecommers_app/view_models/auth_view_model.dart';
+import 'package:ecommers_app/view_models/category_view_model.dart';
+import 'package:ecommers_app/view_models/product_view_model.dart';
 import 'package:ecommers_app/view_models/tab_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +19,8 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TabViewModel()),
+        ChangeNotifierProvider(create: (_) => ProductsViewModel()),
+        ChangeNotifierProvider(create: (_) => CategoriesViewModel()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
       ],
       child: const MyApp(),

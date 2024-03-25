@@ -69,7 +69,7 @@ class _TextFieldItemState extends State<TextFieldItem> {
         },
         style: AppTextStyle.interRegular.copyWith(fontSize: 22.w),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 13.w),
+          contentPadding: EdgeInsets.symmetric(vertical: 13),
           fillColor: AppColors.white,
           border: InputBorder.none,
           filled: true,

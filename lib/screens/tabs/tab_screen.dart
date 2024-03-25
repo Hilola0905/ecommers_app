@@ -1,9 +1,8 @@
-
+import 'package:ecommers_app/screens/tabs/category/category__screen.dart';
 import 'package:ecommers_app/screens/tabs/product/product_screen.dart';
 import 'package:ecommers_app/screens/tabs/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../view_models/tab_view_model.dart';
 
 class TabScreen extends StatefulWidget {
@@ -15,6 +14,7 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   List<Widget> screens = [
+    CategoryScreen(),
     ProductScreen(),
     ProfileScreen(),
   ];
@@ -30,11 +30,17 @@ class _TabScreenState extends State<TabScreen> {
         },
         items: const [
           BottomNavigationBarItem(
+            icon: Icon(Icons.category_sharp),
+            label: "Category",
+            activeIcon: Icon(
+              Icons.category_sharp,
+            ),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.check_box_outline_blank),
             label: "Products",
             activeIcon: Icon(
               Icons.check_box_outline_blank,
-              color: Colors.orange,
             ),
           ),
           BottomNavigationBarItem(
@@ -42,7 +48,6 @@ class _TabScreenState extends State<TabScreen> {
             label: "Profile",
             activeIcon: Icon(
               Icons.person,
-              color: Colors.orange,
             ),
           )
         ],

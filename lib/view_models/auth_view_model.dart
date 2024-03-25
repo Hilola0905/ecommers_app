@@ -95,6 +95,11 @@ class AuthViewModel extends ChangeNotifier {
     await FirebaseAuth.instance.currentUser!.updateDisplayName(username);
     _notify(false);
   }
+  updateEmail(String email) async {
+    _notify(true);
+    await FirebaseAuth.instance.currentUser!.updateEmail(email);
+    _notify(false);
+  }
 
   updateImageUrl(String imagePath) async {
     _notify(true);
