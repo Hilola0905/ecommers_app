@@ -1,4 +1,5 @@
 
+import 'package:ecommers_app/data/models/category_model.dart';
 import 'package:ecommers_app/screens/add_category/add_category_screen.dart';
 import 'package:ecommers_app/screens/add_product/add_product_screen.dart';
 import 'package:ecommers_app/screens/product_detail/product_detail_screen.dart';
@@ -31,9 +32,9 @@ class AppRoutes {
         case RouteNames.addCategoryRoute:
         return navigate(const AddCategoryScreen());
       case RouteNames.updatedCategoryRoute:
-        return navigate(const UpdateCategoryScreen());
+        return navigate( UpdateCategoryScreen(categoryModel: settings.arguments as CategoryModel  ));
       case RouteNames.updatedProductRoute:
-        return navigate(const UpdateProductScreen());
+        return navigate( UpdateProductScreen(docId: settings.arguments as String));
  case RouteNames.addProductRoute:
         return navigate(const AddProductScreen());
  case RouteNames.detailProductRoute:

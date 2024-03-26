@@ -9,12 +9,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/models/category_model.dart';
+import '../../services/local_notifacation_service.dart';
 import '../../utils/images/app_images.dart';
 import '../../utils/size/screen_utils.dart';
 import '../../utils/style/app_text_style.dart';
+import '../../view_models/category_view_model.dart';
 
 class UpdateCategoryScreen extends StatefulWidget {
-  const UpdateCategoryScreen({super.key});
+  const UpdateCategoryScreen({super.key, required this.categoryModel, });
+  final CategoryModel categoryModel;
 
   @override
   State<UpdateCategoryScreen> createState() => _UpdateCategoryScreenState();
@@ -22,11 +26,13 @@ class UpdateCategoryScreen extends StatefulWidget {
 int activeIndex=0;
 class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController urlController = TextEditingController();
 
 
   @override
   void dispose() {
     nameController.dispose();
+    urlController.dispose();
     super.dispose();
   }
 
@@ -51,44 +57,6 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 4,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  ...List.generate(categoryImage.length, (index) =>
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(22),
-                          child: Image.network(categoryImage[index],fit: BoxFit.cover,),
-                        ),
-                      )
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(categoryImage.length, (index) =>
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 6.w),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: activeIndex==index?Colors.green : Colors.grey,
-                        ),
-                      )
-                  ),
-
-                ],
-              ),
-            ),
-            Expanded(
-                flex: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -109,6 +77,23 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                         isPassword: false,
                         errorText: "This user name is not full"
                     ),
+                    SizedBox(height: 20.h,),
+                    Text(
+                      "Image Url",
+                      textAlign: TextAlign.center,
+                      style: AppTextStyle.interSemiBold.copyWith(
+                          fontSize: 20,
+                          color: Colors.black.withOpacity(0.7)
+                      ),
+                    ),
+                    SizedBox(height: 12.h,),
+                    TextFieldItem(
+                        exp: AppConstants.textRegExp,
+                        hintText: "image url",
+                        controller: urlController,
+                        isPassword: false,
+                        errorText: "This user name is not full"
+                    ),
                     SizedBox(height: 50.h,),
                     SizedBox(
                       height: 50,
@@ -118,7 +103,24 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                             backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16))),
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<CategoriesViewModel>()
+                              .updateCategory(
+                              CategoryModel(
+                              imageUrl:categoryImage[0],
+                              categoryName: nameController.text,
+                              docId: widget.categoryModel.docId,
+                            ),
+                            context,
+                          );
+                          Navigator.pop(context);
+                          LocalNotificationService().showNotification(
+                            title: "${nameController.text} nomga update bo'ldi!",
+                            body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
+                            id: 7,
+                          );
+                        },
                         child: Text(
                           "Update category",
                           style: AppTextStyle.interSemiBold

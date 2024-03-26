@@ -1,15 +1,18 @@
 import 'package:ecommers_app/utils/size/screen_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/local/image_data.dart';
+import '../../data/models/product_model.dart';
+import '../../services/local_notifacation_service.dart';
 import '../../utils/contacts/app_contacts.dart';
 import '../../utils/style/app_text_style.dart';
+import '../../view_models/product_view_model.dart';
 import '../auth/widgets/text_feild_item.dart';
 
 class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
-
+  const AddProductScreen({super.key,});
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
 }
@@ -164,7 +167,26 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     backgroundColor: Colors.orange,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16))),
-                onPressed: () {},
+                onPressed: (){
+                  context.read<ProductsViewModel>().insertProducts(
+                    ProductModel(
+                      price: 12.5,
+                      imageUrl:
+                      "https://i.ebayimg.com/images/g/IUMAAOSwZGBkTR-K/s-l400.png",
+                      productName: productNameController.text,
+                      docId: "",
+                      productDescription: productDescriptionController.text,
+                      categoryId: "kcggCJzOEz7gH1LQy44x",
+                    ),
+                    context,
+                  );
+                  Navigator.pop(context);
+                  LocalNotificationService().showNotification(
+                    title: "${productNameController.text} nomga add bo'ldi!",
+                    body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
+                    id: 8,
+                  );
+                },
                 child: Text(
                   "Add",
                   style: AppTextStyle.interSemiBold

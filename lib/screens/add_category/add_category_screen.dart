@@ -9,9 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/models/category_model.dart';
+import '../../services/local_notifacation_service.dart';
 import '../../utils/images/app_images.dart';
 import '../../utils/size/screen_utils.dart';
 import '../../utils/style/app_text_style.dart';
+import '../../view_models/category_view_model.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   const AddCategoryScreen({super.key});
@@ -20,18 +23,22 @@ class AddCategoryScreen extends StatefulWidget {
   State<AddCategoryScreen> createState() => _AddCategoryScreenState();
 }
 int activeIndex=0;
+
 class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController nameController = TextEditingController();
- 
+  final TextEditingController urlController = TextEditingController();
+
 
   @override
   void dispose() {
+    urlController.dispose();
     nameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    int id1=1;
     width=MediaQuery.of(context).size.width;
     height=MediaQuery.of(context).size.height;
     return Scaffold(
@@ -50,43 +57,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              flex: 4,
-             child: ListView(
-               scrollDirection: Axis.horizontal,
-               children: [
-                 ...List.generate(categoryImage.length, (index) =>
-                 Container(
-                   margin: EdgeInsets.symmetric(horizontal: 8.w),
-                   child: ClipRRect(
-                     borderRadius: BorderRadius.circular(22),
-                     child: Image.network(categoryImage[index],fit: BoxFit.cover,),
-                   ),
-                 )
-                 ),
-               ],
-             ),
-           ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(categoryImage.length, (index) =>
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 6.w),
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: activeIndex==index?Colors.green : Colors.grey,
-                        ),
-                      )
-                  ),
-
-                ],
-              ),
-            ),
             Expanded(
               flex: 5,
                 child: Column(
@@ -109,6 +79,23 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                         isPassword: false,
                         errorText: "This user name is not full"
                     ),
+                    SizedBox(height: 20.h,),
+                    Text(
+                      "Category image Url",
+                      textAlign: TextAlign.center,
+                      style: AppTextStyle.interSemiBold.copyWith(
+                          fontSize: 20,
+                          color: Colors.black.withOpacity(0.7)
+                      ),
+                    ),
+                    SizedBox(height: 12.h,),
+                    TextFieldItem(
+                        exp: AppConstants.textRegExp,
+                        hintText: "image url",
+                        controller: urlController,
+                        isPassword: false,
+                        errorText: "This user name is not full"
+                    ),
                     SizedBox(height: 50.h,),
                     SizedBox(
                       height: 50,
@@ -118,7 +105,25 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                             backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16))),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CategoriesViewModel>().insertCategory(
+                            CategoryModel(
+                              imageUrl:
+                              "https://static-assets.business.amazon.com/assets/in/24th-jan/705_Website_Blog_Appliances_1450x664.jpg.transform/1450x664/image.jpg",
+                              categoryName: nameController.text,
+                              docId: "",
+
+                            ),
+                            context,
+                          );
+                          Navigator.pop(context);
+                          LocalNotificationService().showNotification(
+                            title: "${nameController.text} maxsulot qo'shildi!",
+                            body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
+                            id: id1,
+                          );
+                          id1++;
+                        },
                         child: Text(
                           "add category",
                           style: AppTextStyle.interSemiBold

@@ -4,10 +4,12 @@ class CategoryModel {
   final String categoryName;
   final String imageUrl;
 
+
   CategoryModel({
     required this.imageUrl,
     required this.categoryName,
     required this.docId,
+
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
@@ -15,6 +17,7 @@ class CategoryModel {
       docId: json["doc_id"] as String? ?? "",
       imageUrl: json["image_url"] as String? ?? "",
       categoryName: json["category_name"] as String? ?? "",
+
     );
   }
 
@@ -23,6 +26,7 @@ class CategoryModel {
       "doc_id": "",
       "image_url": imageUrl,
       "category_name": categoryName,
+
     };
   }
 
@@ -30,6 +34,7 @@ class CategoryModel {
     return {
       "image_url": imageUrl,
       "category_name": categoryName,
+
     };
   }
 }

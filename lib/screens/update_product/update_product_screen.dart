@@ -1,14 +1,19 @@
 import 'package:ecommers_app/utils/size/screen_utils.dart';
+import 'package:ecommers_app/view_models/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/local/image_data.dart';
+import '../../data/models/product_model.dart';
+import '../../services/local_notifacation_service.dart';
 import '../../utils/contacts/app_contacts.dart';
 import '../../utils/style/app_text_style.dart';
 import '../auth/widgets/text_feild_item.dart';
 
 class UpdateProductScreen extends StatefulWidget {
-  const UpdateProductScreen({super.key});
+  const UpdateProductScreen({super.key, required this.docId});
+  final String docId;
 
   @override
   State<UpdateProductScreen> createState() => _UpdateProductScreenState();
@@ -164,7 +169,29 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                       backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16))),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(widget.docId);
+                    context
+                        .read<ProductsViewModel>()
+                        .updateProduct(
+                      ProductModel(
+                        price: 12.5,
+                        imageUrl:
+                        "https://i.ebayimg.com/images/g/IUMAAOSwZGBkTR-K/s-l400.png",
+                        productName: productNameController.text,
+                        docId: widget.docId,
+                        productDescription: productDescriptionController.text,
+                        categoryId: "kcggCJzOEz7gH1LQy44x",
+                      ),
+                      context,
+                    );
+                    Navigator.pop(context);
+                    LocalNotificationService().showNotification(
+                      title: "${productNameController.text} nomga delete bo'ldi!",
+                      body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
+                      id: 8,
+                    );
+                  },
                   child: Text(
                     "Update",
                     style: AppTextStyle.interSemiBold

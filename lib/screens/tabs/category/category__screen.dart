@@ -1,11 +1,13 @@
 import 'package:ecommers_app/screens/routes.dart';
 import 'package:ecommers_app/screens/tabs/category/widgets/category_item.dart';
 import 'package:ecommers_app/utils/size/screen_utils.dart';
+import 'package:ecommers_app/view_models/notification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/category_model.dart';
+import '../../../services/local_notifacation_service.dart';
 import '../../../view_models/category_view_model.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -60,7 +62,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       name: category.categoryName,
                       imageUrl: category.imageUrl,
                       onEdit:(){
-                        Navigator.pushNamed(context, RouteNames.updatedCategoryRoute);
+                        print("edit");
+                        Navigator.pushNamed(context, RouteNames.updatedCategoryRoute,arguments: category);
                       },
                       onDelete: (){
                         showDialog(context: context, builder: (context){
@@ -68,7 +71,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             title : const  Text(" This category is delete "),
                             actions: [
                               TextButton(
-                                  onPressed:(){
+                                  onPressed:() async  {
+                                    print(category.docId);
+                                    String name=category.categoryName;
+                                    context
+                                        .read<CategoriesViewModel>()
+                                        .deleteCategory(category.docId, context);
+                                    Navigator.pop(context);
+                                    LocalNotificationService().showNotification(
+                                      title: "${category.categoryName} nomga delete bo'ldi!",
+                                      body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
+                                      id: 8,
+                                    );
                                   },
                                   child: const Text("ok",style: TextStyle(
                                       fontWeight: FontWeight.w500,

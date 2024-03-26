@@ -1,11 +1,13 @@
+import 'package:ecommers_app/data/models/product_model.dart';
 import 'package:ecommers_app/utils/size/screen_utils.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key, required this.onEdit, required this.onDelete, required this.onTap});
+  const ProductItem({super.key, required this.onEdit, required this.onDelete, required this.onTap, required this.product});
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onTap;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -33,29 +35,30 @@ class ProductItem extends StatelessWidget {
             Expanded(
               flex: 5,
                 child: ClipRRect(
+                  child: Image.network( product.imageUrl),
                 )
             ),
             Expanded(
                 flex: 5,
                 child: Column(
                   children: [
-                   const  Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("name",),
+                        Text("name : ${product.productName}",),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("price",),
+                        Text(product.price.toString(),),
                         IconButton(
                             onPressed: onEdit,
-                            icon: Icon(Icons.edit)
+                            icon: const Icon(Icons.edit)
                         ),
                         IconButton(
                             onPressed: onDelete,
-                            icon: Icon(Icons.delete,color: Colors.red,)
+                            icon:  const Icon(Icons.delete,color: Colors.red,)
                         ),
                       ],
                     ),
