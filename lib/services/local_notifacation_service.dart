@@ -1,13 +1,11 @@
-
-import 'package:ecommers_app/screens/product_detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'dart:async';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../screens/news/news_screen.dart';
 
-import '../screens/tabs/profile/profile_screen.dart';
 
 
 Future<void> configureLocalTimeZone() async {
@@ -48,7 +46,7 @@ class LocalNotificationService {
           if (notification.payload != null) {
             Navigator.push(navigatorKey.currentContext!,
                 MaterialPageRoute(builder: (context) {
-                  return const  ProductDetailScreen();
+                  return const NewsScreen();
                 }));
           }
           //print(notification.payload);

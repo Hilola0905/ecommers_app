@@ -36,6 +36,12 @@ class _ProductScreenState extends State<ProductScreen> {
                 Navigator.pushNamed(context, RouteNames.addProductRoute);
               },
               icon: Icon(Icons.add)
+          ),
+          IconButton(
+              onPressed: (){
+                Navigator.pushNamed(context, RouteNames.tabNews);
+              },
+              icon: Icon(Icons.newspaper)
           )
         ],
       ),

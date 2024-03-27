@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/local/image_data.dart';
 import '../../data/models/product_model.dart';
+import '../../data/provider/api_provider.dart';
 import '../../services/local_notifacation_service.dart';
 import '../../utils/contacts/app_contacts.dart';
 import '../../utils/style/app_text_style.dart';
@@ -167,7 +168,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     backgroundColor: Colors.orange,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16))),
-                onPressed: (){
+                onPressed: () async {
                   context.read<ProductsViewModel>().insertProducts(
                     ProductModel(
                       price: 12.5,
@@ -186,6 +187,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     body: "Maxsulot haqida ma'lumot olishingiz mumkin.",
                     id: 8,
                   );
+
+
                 },
                 child: Text(
                   "Add",

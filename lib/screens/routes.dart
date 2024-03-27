@@ -1,14 +1,13 @@
-
 import 'package:ecommers_app/data/models/category_model.dart';
 import 'package:ecommers_app/screens/add_category/add_category_screen.dart';
 import 'package:ecommers_app/screens/add_product/add_product_screen.dart';
+import 'package:ecommers_app/screens/news/news_screen.dart';
 import 'package:ecommers_app/screens/product_detail/product_detail_screen.dart';
 import 'package:ecommers_app/screens/tabs/tab_screen.dart';
 import 'package:ecommers_app/screens/update_category/update_category_screen.dart';
 import 'package:ecommers_app/screens/update_product/update_product_screen.dart';
 import 'package:ecommers_app/screens/update_profile/update_profile.dart';
 import 'package:flutter/material.dart';
-
 import 'auth/login/login_screen.dart';
 import 'auth/registor/registor_screen.dart';
 import 'auth/splash/splash_screen.dart';
@@ -39,7 +38,8 @@ class AppRoutes {
         return navigate(const AddProductScreen());
  case RouteNames.detailProductRoute:
         return navigate(const ProductDetailScreen());
-
+        case RouteNames.tabNews:
+        return navigate(const NewsScreen());
       default:
         return navigate(
           const Scaffold(
@@ -59,6 +59,7 @@ class AppRoutes {
 class RouteNames {
   static const String splashScreen = "/";
   static const String tabRoute = "/tab_route";
+  static const String tabNews = "/news_route";
   static const String loginRoute = "/login_route";
   static const String updateProfileRoute = "/update_profile_route";
   static const String registerRoute = "/register_route";
