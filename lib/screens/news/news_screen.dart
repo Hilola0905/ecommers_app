@@ -62,11 +62,6 @@ class _NewsScreenState extends State<NewsScreen> {
                       title: "vbnmkjhg",
                       body: "dascription",
                     );
-                    LocalNotificationService().showNotification(
-                      title: "Hello everyOne",
-                      body: "fghjkl;lkjhgfdxs",
-                      id: 12,
-                    );
                     ApiProvider().readNotification(
                         title: "",
                         body: "ghjklmnbvgcf"
